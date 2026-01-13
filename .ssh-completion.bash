@@ -80,6 +80,9 @@ _parse_ssh_config() {
                     # Skip wildcard patterns (*, ?, brackets)
                     [[ "$host" == *[\*\?\[\]]* ]] && continue
                     
+                    # Skip hostnames starting with dash (could be confused with flags)
+                    [[ "$host" == -* ]] && continue
+                    
                     # Skip hostnames with potentially dangerous characters for security
                     # Valid hostnames should only contain: alphanumeric, dash, dot, underscore, colon (for IPv6/ports)
                     # This prevents command injection via $(), backticks, semicolons, pipes, redirects, etc.
