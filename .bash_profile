@@ -7,6 +7,11 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 
 eval "$(fzf --bash)"
 
+# Enable brew command autocompletion
+if [ -f ~/.brew-completion.bash ]; then
+    . ~/.brew-completion.bash
+fi
+
 # Enable SSH hostname autocompletion
 if [ -f ~/.ssh-completion.bash ]; then
     . ~/.ssh-completion.bash
