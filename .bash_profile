@@ -17,6 +17,11 @@ if [ -f ~/.ssh-completion.bash ]; then
     . ~/.ssh-completion.bash
 fi
 
+# Enable podman command autocompletion
+if [ -f ~/.podman-completion.bash ]; then
+    . ~/.podman-completion.bash
+fi
+
 export EDITOR=vi
 export LC_ALL=C.UTF-8
 
