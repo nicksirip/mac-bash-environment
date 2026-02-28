@@ -27,6 +27,10 @@ if [ -f ~/.ssh-completion.bash ]; then
     . ~/.ssh-completion.bash
 fi
 
+if [ -f ~/.podman-completion.bash ]; then
+    . ~/.podman-completion.bash
+fi
+
 if [ -f /usr/share/bash-completion/completions/fzf ]; then
     . /usr/share/bash-completion/completions/fzf
 fi
