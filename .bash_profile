@@ -6,7 +6,7 @@
 if (( BASH_VERSINFO[0] < 4 )) && [[ -x /opt/homebrew/bin/bash ]] \
         && [[ -z "${BASH_PROFILE_REEXEC:-}" ]]; then
     export BASH_PROFILE_REEXEC=1
-    exec /opt/homebrew/bin/bash --login
+    exec -l /opt/homebrew/bin/bash
 fi
 
 # Homebrew
