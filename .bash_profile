@@ -27,12 +27,22 @@ if [ -f ~/.ssh-completion.bash ]; then
     . ~/.ssh-completion.bash
 fi
 
-. /usr/share/bash-completion/completions/fzf
-. /usr/share/doc/fzf/examples/key-bindings.bash
+if [ -f /usr/share/bash-completion/completions/fzf ]; then
+    . /usr/share/bash-completion/completions/fzf
+fi
+
+if [ -f /usr/share/doc/fzf/examples/key-bindings.bash ]; then
+    . /usr/share/doc/fzf/examples/key-bindings.bash
+fi
 
 # Tools
-eval "$(fzf --bash)"
-. keychain --nolock --eval -q
+if [ -f /usr/share/bash-completion/completions/fzf ]; then
+    eval "$(fzf --bash)"
+fi
+
+if command -v keychain &>/dev/null; then
+    eval "$(keychain --nolock --eval -q)"
+fi
 
 # Session
 if [ -z "$TMUX" ]; then
