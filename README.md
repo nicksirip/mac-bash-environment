@@ -1,6 +1,51 @@
 # environment
 This is my MBP setup.
 
+## Brew Command Autocompletion
+
+This repository includes Homebrew (`brew`) tab autocomplete support for Bash, powered by the completion scripts that ship with Homebrew itself.
+
+### Features
+
+- **Subcommand completion**: Press TAB after `brew ` to see all available subcommands (`install`, `uninstall`, `upgrade`, `search`, etc.)
+- **Formula & cask completion**: Press TAB after `brew install ` to autocomplete package names
+- **Option completion**: Flags and options for each subcommand are also tab-completable
+- **Automatic detection**: Resolves the Homebrew prefix from `$HOMEBREW_PREFIX` or `brew --prefix`
+
+### Installation
+
+Brew autocompletion is automatically enabled when you source the `.bash_profile`:
+
+```bash
+source ~/.bash_profile
+```
+
+Or manually source the completion script:
+
+```bash
+source ~/.brew-completion.bash
+```
+
+### Usage
+
+```bash
+brew <TAB>
+# Shows: install uninstall upgrade search info list ...
+
+brew install <TAB>
+# Shows available formulae matching what you've typed
+
+brew install wget<TAB>
+# Autocompletes to: brew install wget
+```
+
+### Requirements
+
+- [Homebrew](https://brew.sh) must be installed
+- For the best experience, install `bash-completion@2` via Homebrew (`brew install bash-completion@2`). Without it, the script falls back to sourcing individual completion files from `bash_completion.d`, which may provide partial or no completion support depending on your Homebrew version.
+
+---
+
 ## SSH Hostname Autocompletion
 
 This repository includes an intelligent SSH hostname autocompletion feature that extracts hostnames from your SSH configuration files and enables tab completion in Bash.
