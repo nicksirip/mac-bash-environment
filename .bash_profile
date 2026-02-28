@@ -20,10 +20,17 @@ fi
 export EDITOR=vi
 export LC_ALL=C.UTF-8
 
-. keychain --nolock --eval -q 
+if command -v keychain &>/dev/null; then
+    eval "$(keychain --nolock --eval -q)"
+fi
 
-. /usr/share/bash-completion/completions/fzf
-. /usr/share/doc/fzf/examples/key-bindings.bash
+if [ -f /usr/share/bash-completion/completions/fzf ]; then
+    . /usr/share/bash-completion/completions/fzf
+fi
+
+if [ -f /usr/share/doc/fzf/examples/key-bindings.bash ]; then
+    . /usr/share/doc/fzf/examples/key-bindings.bash
+fi
 
 HISTCONTROL=ignoredups:erasedups:ignorespace
 
