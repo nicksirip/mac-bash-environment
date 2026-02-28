@@ -44,6 +44,10 @@ if command -v keychain &>/dev/null; then
     eval "$(keychain --nolock --eval -q)"
 fi
 
+if command -v starship &>/dev/null; then
+    eval "$(starship init bash)"
+fi
+
 # Session
 if [ -z "$TMUX" ]; then
     unset LC_ALL
