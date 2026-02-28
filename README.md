@@ -1,6 +1,28 @@
 # environment
 This is my MBP setup.
 
+## Shell Requirement: Bash ≥ 4
+
+macOS ships with **bash 3.2** (GNU bash, version 3.2.x), which is too old for `bash-completion@2` and the tab-completion scripts in this repository.  `bash-completion@2` requires **bash ≥ 4.1**; without it, helpers such as `_get_comp_words_by_ref` are never defined and completions (e.g. `podman <TAB>`) fail.
+
+### Fix: install and use Homebrew bash
+
+```bash
+brew install bash
+```
+
+Once installed, `.bash_profile` will automatically re-exec itself with `/opt/homebrew/bin/bash` whenever it detects that the current shell is older than version 4.  All subsequent profiles and completions will therefore run under a modern bash.
+
+To make Homebrew bash your permanent login shell (optional, but recommended):
+
+```bash
+# Add the Homebrew bash to the list of allowed shells
+echo /opt/homebrew/bin/bash | sudo tee -a /etc/shells
+
+# Set it as your default login shell
+chsh -s /opt/homebrew/bin/bash
+```
+
 ## Brew Command Autocompletion
 
 This repository includes Homebrew (`brew`) tab autocomplete support for Bash, powered by the completion scripts that ship with Homebrew itself.
