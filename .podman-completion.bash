@@ -25,9 +25,26 @@
 # NOTES:
 # - Podman ships its own completion scripts via 'podman completion bash'
 # - Falls back to system-installed completion files if the command is unavailable
+# - Requires the bash-completion package (_get_comp_words_by_ref) to be loaded first
 
-# Check if podman is available
-if command -v podman &>/dev/null; then
+# Ensure bash-completion helpers (e.g. _get_comp_words_by_ref) are available.
+# They are normally provided by the bash-completion package.  Load it from the
+# first readable location if it has not already been sourced.
+if ! declare -f _get_comp_words_by_ref &>/dev/null; then
+    for _podman_bash_completion in \
+        "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" \
+        "/usr/share/bash-completion/bash_completion" \
+        "/etc/bash_completion"; do
+        if [[ -r "$_podman_bash_completion" ]]; then
+            . "$_podman_bash_completion"
+            break
+        fi
+    done
+    unset _podman_bash_completion
+fi
+
+# Check if podman is available and bash-completion helpers are loaded
+if command -v podman &>/dev/null && declare -f _get_comp_words_by_ref &>/dev/null; then
     # Primary: use podman's built-in completion generator
     if podman completion bash &>/dev/null; then
         eval "$(podman completion bash)"
