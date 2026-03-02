@@ -2,11 +2,14 @@
 # bash-completion@2 requires bash >= 4.1; without this, tab completions that
 # rely on _get_comp_words_by_ref (e.g. podman) will not work correctly.
 # Guards:
-#   $- == *i*           – only re-exec for interactive shells
-#   TERM_PROGRAM        – skip in VS Code (exec -l breaks its Podman integration)
-#   BASH_PROFILE_REEXEC – prevent infinite loops
+#   $- == *i*            – only re-exec for interactive shells
+#   TERM_PROGRAM         – skip in VS Code integrated terminal
+#   VSCODE_IPC_HOOK_CLI  – skip in any VS Code extension shell (e.g. Container
+#                          Tools); VS Code sets this on itself and all children
+#   BASH_PROFILE_REEXEC  – prevent infinite loops
 if (( BASH_VERSINFO[0] < 4 )) && [[ $- == *i* ]] \
         && [[ "${TERM_PROGRAM:-}" != "vscode" ]] \
+        && [[ -z "${VSCODE_IPC_HOOK_CLI:-}" ]] \
         && [[ -x /opt/homebrew/bin/bash ]] \
         && [[ -z "${BASH_PROFILE_REEXEC:-}" ]]; then
     export BASH_PROFILE_REEXEC=1
