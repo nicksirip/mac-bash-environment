@@ -11,7 +11,8 @@
 #   _ppid_comm              – secondary guard: skip when the immediate parent comm
 #                             contains "node", "Electron", or "Code Helper" (substring
 #                             match handles both bare names and full macOS binary paths)
-#   BASH_PROFILE_REEXEC     – prevent infinite loops
+#   BASH_PROFILE_REEXEC     – prevent infinite loops within a single re-exec chain;
+#                             unset below so tmux child shells can re-exec independently
 _ppid_comm=$(ps -o comm= -p "$PPID" 2>/dev/null || true)
 if (( BASH_VERSINFO[0] < 4 )) && [[ $- == *i* ]] \
         && [[ "${TERM_PROGRAM:-}" != "vscode" ]] \
@@ -26,6 +27,9 @@ if (( BASH_VERSINFO[0] < 4 )) && [[ $- == *i* ]] \
     exec -l /opt/homebrew/bin/bash
 fi
 unset _ppid_comm
+# Clear the re-exec flag so processes launched from this shell (e.g. tmux panes)
+# are not prevented from re-exec'ing into Homebrew bash themselves.
+unset BASH_PROFILE_REEXEC
 
 # Homebrew
 export HOMEBREW_PREFIX="/opt/homebrew";
