@@ -1,3 +1,18 @@
+# Re-exec with Homebrew bash when running under the macOS system bash (3.2).
+# bash-completion@2 requires bash >= 4.1; without this, tab completions that
+# rely on _get_comp_words_by_ref (e.g. podman) will not work correctly.
+# Guards:
+#   $- == *i*           – only re-exec for interactive shells
+#   TERM_PROGRAM        – skip in VS Code (exec -l breaks its Podman integration)
+#   BASH_PROFILE_REEXEC – prevent infinite loops
+if (( BASH_VERSINFO[0] < 4 )) && [[ $- == *i* ]] \
+        && [[ "${TERM_PROGRAM:-}" != "vscode" ]] \
+        && [[ -x /opt/homebrew/bin/bash ]] \
+        && [[ -z "${BASH_PROFILE_REEXEC:-}" ]]; then
+    export BASH_PROFILE_REEXEC=1
+    exec -l /opt/homebrew/bin/bash
+fi
+
 # Homebrew
 export HOMEBREW_PREFIX="/opt/homebrew";
 export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
