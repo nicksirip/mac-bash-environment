@@ -26,6 +26,9 @@ export LC_ALL=C.UTF-8
 # History
 HISTCONTROL=ignoredups:erasedups:ignorespace
 
+# Interactive-only settings
+if [[ $- == *i* ]]; then
+
 # Signal traps
 trap INT
 trap HUP
@@ -70,4 +73,6 @@ if [ -z "$TMUX" ]; then
     unset LC_ALL
     tmux new -t default || tmux new -s default
 fi
+
+fi # end interactive-only settings
 
